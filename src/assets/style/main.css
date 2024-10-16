@@ -3,3 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+    --red-primary: #BB010B;
+    --red-secondary: #CD1624;
+    --green-primary: #006F57;
+    --green-secondary: #23856D;
+    --white-primary: #FAF8F8;
+    --black-primary: rgba(255, 255, 255, 0.87);
+
+    --green-ternary: #213547;
+}
+
+
