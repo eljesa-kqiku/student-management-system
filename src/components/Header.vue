@@ -5,16 +5,16 @@
       <h2 class="font-semibold text-center">Student Information  <br/>System</h2>
     </div>
     <div class="navbar-wrapper flex gap-7">
-      <p class="navbar-item">Home</p>
-      <p class="navbar-item">Students</p>
-      <p class="navbar-item">About</p>
-      <p class="navbar-item">Help</p>
+      <RouterLink to="home" class="navbar-item">Home</RouterLink>
+      <RouterLink to="students" class="navbar-item">Students</RouterLink>
+      <RouterLink to="about" class="navbar-item">About</RouterLink>
+      <RouterLink to="help" class="navbar-item">Help</RouterLink>
     </div>
     <div class="user-wrapper flex gap-7 items">
       <div class="user-image rounded-full w-12 h-12 bg-gray-200"></div>
       <div class="user-text min-w-16">
         <p>John Doe</p>
-        <p class="text-gray-500">Log Out</p>
+        <RouterLink to="login" class="text-gray-500">Log Out</RouterLink>
       </div>
     </div>
   </div>
