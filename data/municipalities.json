@@ -1,0 +1,26 @@
+{
+  "data": [
+    {
+      "id": "a361dd03-2fcf-404b-adee-f595ecc27f1e",
+      "value": "Prishtine"
+    },{
+      "id": "1cb81f88-f5ad-46a2-91af-40cc6fe52e3c",
+      "value": "Mitrovice"
+    },{
+      "id": "cc2c4253-3681-4761-8c7d-1fc7cd3e2755",
+      "value": "Prizren"
+    },{
+      "id": "a1d32f1c-797e-40ae-a701-cfba7e60cd74",
+      "value": "Peje"
+    },{
+      "id": "cba8b5fd-095f-4231-8f23-a429f64dc65e",
+      "value": "Ferizaj"
+    },{
+      "id": "1c8201f2-7b61-46ef-942b-a84f8eaa0cbe",
+      "value": "Gjilan"
+    },{
+      "id": "3361cd37-8dce-4ca2-9445-6bfe045a1361",
+      "value": "Gjakove"
+    }
+  ]
+}
