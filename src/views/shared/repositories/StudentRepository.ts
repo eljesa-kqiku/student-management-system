@@ -9,6 +9,7 @@ export default class StudentRepository{
 
     private pm = {
         students_list: [],
+        current_student_to_modify: ""
     }
 
     constructor() {
@@ -22,6 +23,16 @@ export default class StudentRepository{
     set studentsList(value:StudentModel[]){
         this.pm.students_list = value
     }
+
+    get currentStudentToModify(): string{
+        return this.pm.current_student_to_modify
+    }
+
+    set currentStudentToModify(value:string){
+        this.pm.current_student_to_modify = value
+    }
+
+
 
     async init(){
         try{

@@ -12,7 +12,7 @@
             placeholder="Search"
             class="outline outline-1 outline-emerald-900 border-black rounded p-1"
           />
-          <button class="bg-emerald-600 text-white p-2 pl-5 pr-5 rounded">
+          <button class="bg-emerald-600 text-white p-2 pl-5 pr-5 rounded" @click="presenter.createStudent()">
             Register new student
           </button>
         </div>
@@ -33,10 +33,16 @@
               <td>{{ student.first_name }} {{student.last_name}}</td>
               <td>{{ student.date_of_birth }}</td>
               <td></td>
-              <td>Edit | Delete</td>
+              <td>
+                <div class="actions-buttons flex justify-around w-full p-1">
+                  <edit-icon class="edit-icon" @click="presenter.editStudent(student.id)"/>
+                  <trash-icon class="trash-icon" @click="presenter.deleteStudent(student.id)"/>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
+        <router-view></router-view>
       </div>
     </div>
 </template>
@@ -46,6 +52,8 @@ import Header from "@/components/Header.vue";
 import { container } from "@/ioc/ioc";
 import { TYPES } from "@/ioc/types";
 import { onBeforeMount } from "vue";
+import EditIcon from "@/assets/icons/edit-icon.vue";
+import TrashIcon from "@/assets/icons/trash-icon.vue";
 
 let presenter = null;
 
@@ -56,11 +64,24 @@ onBeforeMount(async () => {
 </script>
 
 <style scoped>
-th,
-td {
-  @apply border border-emerald-900 p-3;
+th, td {
+  @apply border border-emerald-900 p-2;
 }
+
 th {
   @apply bg-emerald-600 text-white;
+}
+
+tr:hover {
+  @apply bg-gray-100 cursor-pointer;
+}
+
+.edit-icon, .trash-icon{
+  width: 20px;
+  height: 20px;
+}
+
+.edit-icon:hover path, .trash-icon:hover path{
+  @apply fill-emerald-700
 }
 </style>
