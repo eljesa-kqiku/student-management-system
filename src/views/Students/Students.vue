@@ -3,7 +3,7 @@
     <div
       class="students-wrapper bg-gray-200 w-full flex-1 flex justify-center items-center"
     >
-      <Observer>
+<!--      <Observer>-->
         <div
             class="students-content bg-white w-5/6 h-5/6 rounded-2xl p-10 flex flex-col gap-12"
         >
@@ -45,7 +45,7 @@
           </table>
           <router-view></router-view>
         </div>
-      </Observer>
+<!--      </Observer>-->
     </div>
 </template>
 
@@ -56,7 +56,6 @@ import { TYPES } from "@/ioc/types";
 import { onBeforeMount } from "vue";
 import EditIcon from "@/assets/icons/edit-icon.vue";
 import TrashIcon from "@/assets/icons/trash-icon.vue";
-import {Observer} from "mobx-vue-lite";
 
 let presenter = null;
 

@@ -36,7 +36,7 @@ export default class StudentRepository{
         try{
             let res = await this.studentGateway.fetchAllStudents()
             // todo: add a mapper for this
-            this.studentsList = res.data?.map((student): Object => new StudentModel(
+            this.studentsList = res.data?.map((student: StudentModel) => new StudentModel(
                 student.id,
                 student.index,
                 student.first_name,
@@ -46,6 +46,7 @@ export default class StudentRepository{
             ))
         }catch (e){
             // todo: notify error on ui
+            this.studentsList = []
             console.error(e)
         }
     }
@@ -53,7 +54,13 @@ export default class StudentRepository{
     async editStudent(studentData: StudentModel): Promise <void>{
         // todo: call the api
         let std  = this.studentsList.find(item => item.id === studentData.id)
-        std = studentData
+        if(std) {
+          // edit flow
+          std = studentData;
+        } else {
+            // create flow
+            this.studentsList.push(studentData)
+        }
         this.currentStudentToModify = ""
     }
 

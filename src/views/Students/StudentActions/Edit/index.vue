@@ -1,22 +1,37 @@
 <template>
-  <Popup>
-    <template #content>
-      <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-        <h3 class="text-base font-semibold text-gray-900" id="modal-title">Edit Student</h3>
-        <div class="mt-2">
-
-
+<!--  <Observer>-->
+    <Popup>
+      <template #content>
+        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+          <h3 class="text-base font-semibold text-gray-900" id="modal-title">Edit Student</h3>
+          <div class="mt-2 w-full">
+            <el-form-item class="input-item" label="Index" label-position="top">
+              <el-input v-model="presenter.studentData.index" placeholder="Index" disabled/>
+            </el-form-item>
+            <el-form-item class="input-item" label="First Name" label-position="top">
+              <el-input v-model="presenter.studentData.first_name" placeholder="First Name" />
+            </el-form-item>
+            <el-form-item class="input-item" label="Last Name" label-position="top">
+              <el-input v-model="presenter.studentData.last_name" placeholder="Last Name" />
+            </el-form-item>
+            <el-form-item class="input-item" label="Date of Birth" label-position="top">
+              <el-date-picker v-model="presenter.studentData.date_of_birth" placeholder="Date of Birth" class="!w-full" />
+            </el-form-item>
+            <!--  TODO: this should be a dropdown -->
+            <el-form-item class="input-item" label="Municipality" label-position="top">
+              <el-input v-model="presenter.studentData.municipality_id" placeholder="Municipality" />
+            </el-form-item>
+          </div>
         </div>
-      </div>
-    </template>
-    <template #footer>
-      <button type="button" class="inline-flex w-full justify-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-              @click="presenter.confirm()">Save</button>
-      <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-              @click="presenter.cancel()">Cancel</button>
-    </template>
-  </Popup>
-
+      </template>
+      <template #footer>
+        <button type="button" class="inline-flex w-full justify-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                @click="presenter.confirm()">Save</button>
+        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                @click="presenter.cancel()">Cancel</button>
+      </template>
+    </Popup>
+<!--  </Observer>-->
 </template>
 
 <script setup lang="ts">

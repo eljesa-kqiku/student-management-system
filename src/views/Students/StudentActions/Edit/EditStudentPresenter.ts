@@ -2,6 +2,7 @@ import router from "@/router";
 import {inject, injectable} from "inversify";
 import { TYPES } from '@/ioc/types'
 import StudentModel from "@/views/shared/models/StudentModel";
+import {makeAutoObservable} from "mobx";
 
 @injectable()
 export default class EditStudentPresenter {
@@ -9,6 +10,10 @@ export default class EditStudentPresenter {
 
     vm = {
         student_data: {}
+    }
+
+    constructor() {
+        makeAutoObservable(this)
     }
 
     get studentData(): StudentModel {
