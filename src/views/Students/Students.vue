@@ -3,21 +3,22 @@
     <div
       class="students-wrapper bg-gray-200 w-full flex-1 flex justify-center items-center"
     >
-      <div
-        class="students-content bg-white w-5/6 h-5/6 rounded-2xl p-10 flex flex-col gap-12"
-      >
-        <div class="students-control-ribbon flex justify-between">
-          <input
-            type="text"
-            placeholder="Search"
-            class="outline outline-1 outline-emerald-900 border-black rounded p-1"
-          />
-          <button class="bg-emerald-600 text-white p-2 pl-5 pr-5 rounded" @click="presenter.createStudent()">
-            Register new student
-          </button>
-        </div>
-        <table class="table-auto border-collapse w-full">
-          <thead>
+      <Observer>
+        <div
+            class="students-content bg-white w-5/6 h-5/6 rounded-2xl p-10 flex flex-col gap-12"
+        >
+          <div class="students-control-ribbon flex justify-between">
+            <input
+                type="text"
+                placeholder="Search"
+                class="outline outline-1 outline-emerald-900 border-black rounded p-1"
+            />
+            <button class="bg-emerald-600 text-white p-2 pl-5 pr-5 rounded" @click="presenter.createStudent()">
+              Register new student
+            </button>
+          </div>
+          <table class="table-auto border-collapse w-full">
+            <thead>
             <tr>
               <th>Index</th>
               <th>Name</th>
@@ -25,9 +26,9 @@
               <th>Municipality</th>
               <th>Actions</th>
             </tr>
-          </thead>
+            </thead>
 
-          <tbody>
+            <tbody>
             <tr v-for="student in presenter.studentsList">
               <td>{{ student.index }}</td>
               <td>{{ student.first_name }} {{student.last_name}}</td>
@@ -40,10 +41,11 @@
                 </div>
               </td>
             </tr>
-          </tbody>
-        </table>
-        <router-view></router-view>
-      </div>
+            </tbody>
+          </table>
+          <router-view></router-view>
+        </div>
+      </Observer>
     </div>
 </template>
 
@@ -54,6 +56,7 @@ import { TYPES } from "@/ioc/types";
 import { onBeforeMount } from "vue";
 import EditIcon from "@/assets/icons/edit-icon.vue";
 import TrashIcon from "@/assets/icons/trash-icon.vue";
+import {Observer} from "mobx-vue-lite";
 
 let presenter = null;
 
