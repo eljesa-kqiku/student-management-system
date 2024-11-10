@@ -2,24 +2,14 @@ import 'reflect-metadata'
 import {Container} from "inversify"
 import {TYPES} from "./types";
 
-/**
- Gateways
- */
 import {StudentGateway} from "@/gateways/StudentGateway";
 
-/**
- Repositories
- */
 import StudentRepository from "@/views/shared/repositories/StudentRepository";
 
-/**
- Presenters
- */
 import StudentPresenter from "@/views/Students/StudentPresenter";
+import EditStudentPresenter from "@/views/Students/StudentActions/Edit/EditStudentPresenter";
+import DeleteStudentPresenter from "@/views/Students/StudentActions/Delete/DeleteStudentPresenter";
 
-/**
- Models
- */
 import StudentModel from "@/views/shared/models/StudentModel";
 import MunicipalityModel from "@/views/shared/models/MunicipalityModel";
 
@@ -44,6 +34,8 @@ container.bind(TYPES.StudentRepository).to(StudentRepository).inSingletonScope()
     Presenters
  */
 container.bind(TYPES.StudentPresenter).to(StudentPresenter)
+container.bind(TYPES.EditStudentPresenter).to(EditStudentPresenter)
+container.bind(TYPES.DeleteStudentPresenter).to(DeleteStudentPresenter)
 
 /**
     Models

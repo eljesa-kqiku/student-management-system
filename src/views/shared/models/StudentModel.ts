@@ -9,7 +9,9 @@ export default class StudentModel {
     private _municipality_id: string;
 
 
-    constructor(id: string, index: number, first_name: string, last_name: string, date_of_birth: string, municipality_id: string) {
+    constructor(id: string, index: number = 0,
+                first_name: string = '', last_name: string = '',
+                date_of_birth: string = '', municipality_id: string = '') {
         this._id = id;
         this._index = index;
         this._first_name = first_name;
@@ -17,7 +19,6 @@ export default class StudentModel {
         this._date_of_birth = date_of_birth;
         this._municipality_id = municipality_id;
     }
-
 
     get id(): string {
         return this._id;

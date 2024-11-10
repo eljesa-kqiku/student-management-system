@@ -13,4 +13,6 @@ export const TYPES = {
         Presenters
      */
     StudentPresenter: Symbol.for('student-presenter'),
+    EditStudentPresenter: Symbol.for('edit-student-presenter'),
+    DeleteStudentPresenter: Symbol.for('delete-student-presenter'),
 }

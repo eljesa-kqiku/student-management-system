@@ -28,13 +28,11 @@ export default class StudentRepository{
         return this.pm.current_student_to_modify
     }
 
-    set currentStudentToModify(value:string){
+    set currentStudentToModify(value: string){
         this.pm.current_student_to_modify = value
     }
 
-
-
-    async init(){
+    async init(): Promise<void>{
         try{
             let res = await this.studentGateway.fetchAllStudents()
             // todo: add a mapper for this
@@ -50,5 +48,18 @@ export default class StudentRepository{
             // todo: notify error on ui
             console.error(e)
         }
+    }
+
+    async editStudent(studentData: StudentModel): Promise <void>{
+        // todo: call the api
+        let std  = this.studentsList.find(item => item.id === studentData.id)
+        std = studentData
+        this.currentStudentToModify = ""
+    }
+
+    async deleteStudent(student_id: string): Promise<void>{
+        // todo: call the api
+        this.studentsList = this.studentsList.filter(item => item.id !== student_id)
+        this.currentStudentToModify = ""
     }
 }

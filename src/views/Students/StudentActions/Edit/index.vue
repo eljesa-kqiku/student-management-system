@@ -35,14 +35,19 @@
               <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                 <h3 class="text-base font-semibold text-gray-900" id="modal-title">Edit Student</h3>
                 <div class="mt-2">
-                  student data here
+                  {{ presenter.studentData }}
+
+                  <textarea v-model="presenter.studentData.first_name"></textarea>
+
                 </div>
               </div>
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-            <button type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Save</button>
-            <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+            <button type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                    @click="presenter.confirm()">Save</button>
+            <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    @click="presenter.cancel()">Cancel</button>
           </div>
         </div>
       </div>
@@ -52,7 +57,16 @@
 </template>
 
 <script setup lang="ts">
+import { container } from "@/ioc/ioc";
+import { TYPES } from "@/ioc/types";
+import { onBeforeMount } from "vue";
 
+let presenter = null;
+
+onBeforeMount(async () => {
+  presenter = container.get(TYPES.EditStudentPresenter);
+  await presenter.init();
+});
 </script>
 
 <style scoped>
