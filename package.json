@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "element-plus": "^2.8.7",
     "inversify": "^6.0.2",
     "mobx": "^6.13.3",
     "mobx-vue-lite": "^0.4.3",
