@@ -1,21 +1,35 @@
 <template>
+  <Observer class="w-full flex-1">
     <Header />
     <div
       class="students-wrapper bg-gray-200 w-full flex-1 flex justify-center items-center"
     >
-<!--      <Observer>-->
         <div
             class="students-content bg-white w-5/6 h-5/6 rounded-2xl p-10 flex flex-col gap-12"
         >
-          <div class="students-control-ribbon flex justify-between">
-            <input
-                type="text"
-                placeholder="Search"
-                class="outline outline-1 outline-emerald-900 border-black rounded p-1"
-            />
-            <button class="bg-emerald-600 text-white p-2 pl-5 pr-5 rounded" @click="presenter.createStudent()">
-              Register new student
-            </button>
+          <div class="students-control-ribbon flex justify-between gap-5">
+            <el-input v-model="presenter.queryString"
+                      placeholder="Search by Index or Name"
+            ><template #prefix>
+                <el-icon><Search/></el-icon>
+              </template>
+            </el-input>
+            <el-dropdown trigger="click" placement="bottom-end">
+              <el-button type="primary" class="!bg-emerald-600 !border-none">
+                Sort By <el-icon class="el-icon--right"><arrow-down /></el-icon>
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item v-for="sortKey in presenter.sortByProperties">
+                    <el-checkbox v-model="sortKey.selected">{{sortKey.label}}</el-checkbox>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+            <el-button class="!bg-emerald-600 !border-none text-white p-2 pl-5 pr-5 rounded"
+                       type="success" @click="presenter.createStudent()"
+            >Register new student
+            </el-button>
           </div>
           <table class="table-auto border-collapse w-full">
             <thead>
@@ -29,7 +43,7 @@
             </thead>
 
             <tbody>
-            <tr v-for="student in presenter.studentsList">
+            <tr v-for="student in presenter.filteredStudentList">
               <td>{{ student.index }}</td>
               <td>{{ student.first_name }} {{student.last_name}}</td>
               <td>{{ student.date_of_birth }}</td>
@@ -45,8 +59,8 @@
           </table>
           <router-view></router-view>
         </div>
-<!--      </Observer>-->
     </div>
+  </Observer>
 </template>
 
 <script setup>
@@ -56,6 +70,8 @@ import { TYPES } from "@/ioc/types";
 import { onBeforeMount } from "vue";
 import EditIcon from "@/assets/icons/edit-icon.vue";
 import TrashIcon from "@/assets/icons/trash-icon.vue";
+import {Search} from "@element-plus/icons-vue";
+import {Observer} from "mobx-vue-lite";
 
 let presenter = null;
 
