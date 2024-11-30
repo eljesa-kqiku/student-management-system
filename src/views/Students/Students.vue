@@ -8,24 +8,13 @@
             class="students-content bg-white w-5/6 h-5/6 rounded-2xl p-10 flex flex-col gap-12"
         >
           <div class="students-control-ribbon flex justify-between gap-5">
-            <el-input v-model="presenter.queryString"
+            <el-input :model-value="presenter.queryString"
+                      @input="presenter.setQueryString($event)"
                       placeholder="Search by Index or Name"
             ><template #prefix>
                 <el-icon><Search/></el-icon>
               </template>
             </el-input>
-            <el-dropdown trigger="click" placement="bottom-end">
-              <el-button type="primary" class="!bg-emerald-600 !border-none">
-                Sort By <el-icon class="el-icon--right"><arrow-down /></el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item v-for="sortKey in presenter.sortByProperties">
-                    <el-checkbox v-model="sortKey.selected">{{sortKey.label}}</el-checkbox>
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
             <el-button class="!bg-emerald-600 !border-none text-white p-2 pl-5 pr-5 rounded"
                        type="success" @click="presenter.createStudent()"
             >Register new student
@@ -43,18 +32,18 @@
             </thead>
 
             <tbody>
-            <tr v-for="student in presenter.filteredStudentList">
-              <td>{{ student.index }}</td>
-              <td>{{ student.first_name }} {{student.last_name}}</td>
-              <td>{{ student.date_of_birth }}</td>
-              <td></td>
-              <td>
-                <div class="actions-buttons flex justify-around w-full p-1">
-                  <edit-icon class="edit-icon" @click="presenter.editStudent(student.id)"/>
-                  <trash-icon class="trash-icon" @click="presenter.deleteStudent(student.id)"/>
-                </div>
-              </td>
-            </tr>
+              <tr v-for="student in presenter.filteredStudentList">
+                <td>{{ student.index }}</td>
+                <td>{{ student.first_name }} {{student.last_name}}</td>
+                <td>{{ student.date_of_birth }}</td>
+                <td></td>
+                <td>
+                  <div class="actions-buttons flex justify-around w-full p-1">
+                    <edit-icon class="edit-icon" @click="presenter.editStudent(student.id)"/>
+                    <trash-icon class="trash-icon" @click="presenter.deleteStudent(student.id)"/>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
           <router-view></router-view>
@@ -71,7 +60,6 @@ import { onBeforeMount } from "vue";
 import EditIcon from "@/assets/icons/edit-icon.vue";
 import TrashIcon from "@/assets/icons/trash-icon.vue";
 import {Search} from "@element-plus/icons-vue";
-import {Observer} from "mobx-vue-lite";
 
 let presenter = null;
 

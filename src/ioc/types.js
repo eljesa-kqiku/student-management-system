@@ -15,4 +15,9 @@ export const TYPES = {
     StudentPresenter: Symbol.for('student-presenter'),
     EditStudentPresenter: Symbol.for('edit-student-presenter'),
     DeleteStudentPresenter: Symbol.for('delete-student-presenter'),
+
+    /**
+     * Models
+     */
+    StudentModel: Symbol.for('student-model'),
 }

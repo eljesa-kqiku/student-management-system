@@ -1,5 +1,6 @@
-import {id} from "inversify";
-
+import {injectable} from "inversify";
+import {makeAutoObservable} from "mobx";
+@injectable()
 export default class StudentModel {
     private _id: string;
     private _index: number;
@@ -18,6 +19,7 @@ export default class StudentModel {
         this._last_name = last_name;
         this._date_of_birth = date_of_birth;
         this._municipality_id = municipality_id;
+        makeAutoObservable(this)
     }
 
     get id(): string {

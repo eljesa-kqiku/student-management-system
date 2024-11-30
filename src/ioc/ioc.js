@@ -40,5 +40,5 @@ container.bind(TYPES.DeleteStudentPresenter).to(DeleteStudentPresenter)
 /**
     Models
  */
-container.bind(StudentModel).toSelf()
-container.bind(MunicipalityModel).toSelf()
+container.bind(TYPES.StudentModel).to(StudentModel)
+// container.bind(TYPES.MunicipalityModel).toSelf()

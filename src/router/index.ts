@@ -4,8 +4,8 @@ import Students from "@/views/Students/Students.vue";
 import About from "@/views/About/About.vue";
 import Login from "@/views/Login/Login.vue";
 import Help from "@/views/Help/Help.vue";
-import DeleteStudent from "@/views/Students/StudentActions/Delete/index.vue";
-import EditStudent from "@/views/Students/StudentActions/Edit/index.vue";
+import DeleteStudent from "@/views/Students/StudentActions/Delete/DeleteStudent.vue";
+import EditStudent from "@/views/Students/StudentActions/Edit/EditStudent.vue";
 
 const router = createRouter({
     history: createWebHistory('/'),

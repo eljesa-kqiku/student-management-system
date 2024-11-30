@@ -6,6 +6,7 @@ import router from "@/router";
 import deepClone from 'clone'
 import { SortByModel, SortByType } from "../shared/models/SortByModel";
 import {snakeToTitleCase} from "../shared/services/utility-service";
+
 @injectable()
 export default class StudentPresenter {
     @inject(TYPES.StudentRepository) studentRepository;
@@ -27,7 +28,7 @@ export default class StudentPresenter {
         return this.vm.query_string
     }
 
-    set queryString(val: string){
+    setQueryString(val: string){
         this.vm.query_string = val
     }
 
@@ -55,12 +56,10 @@ export default class StudentPresenter {
 
         // filtering
         if(this.queryString?.length > 0) {
-            console.log("there is a query")
             let query = this.queryString.toLowerCase();
             const keys: string[] = ["index", "first_name", "last_name"]
-            filteredData = this.studentsList?.filter((std: StudentModel) => {
+            filteredData = filteredData?.filter((std: StudentModel) => {
                 for (let key of keys) {
-                    console.log({key, val: std[key]})
                     if((std[key]).toString()?.toLowerCase().includes(query))
                         return true
                 }
@@ -70,7 +69,6 @@ export default class StudentPresenter {
         // sorting
         // let sortKeys: SortByModel[] = this.sortByProperties?.filter(p => p.selected)
         // if(sortKeys?.length > 0){
-        //     console.log({sortKeys})
         //     for(let sortKey of sortKeys){
         //         filteredData = filteredData.sort((a: StudentModel, b: StudentModel) => a[sortKey.key].localeCompare(b[sortKey.key]))
         //     }

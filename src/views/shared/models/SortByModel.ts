@@ -1,3 +1,5 @@
+import {makeAutoObservable} from "mobx";
+
 export class SortByModel{
     private _key: string
     private _label: string
@@ -9,6 +11,7 @@ export class SortByModel{
         this._label = label;
         this._mode = mode;
         this._selected = selected;
+        makeAutoObservable(this)
     }
 
     get key(): string {

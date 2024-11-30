@@ -2,10 +2,12 @@ import {inject, injectable} from "inversify";
 import StudentModel from "../models/StudentModel";
 import {makeAutoObservable} from "mobx";
 import { TYPES } from "@/ioc/types"
+import deepClone from 'clone'
 
 @injectable()
 export default class StudentRepository{
     @inject(TYPES.StudentGateway) studentGateway
+
 
     private pm = {
         students_list: [],
@@ -53,10 +55,10 @@ export default class StudentRepository{
 
     async editStudent(studentData: StudentModel): Promise <void>{
         // todo: call the api
-        let std  = this.studentsList.find(item => item.id === studentData.id)
-        if(std) {
+        let std  = this.studentsList.findIndex(item => item.id === studentData.id)
+        if(std != -1) {
           // edit flow
-          std = studentData;
+            this.studentsList[std] = studentData
         } else {
             // create flow
             this.studentsList.push(studentData)

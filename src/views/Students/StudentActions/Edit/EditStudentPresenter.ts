@@ -3,35 +3,45 @@ import {inject, injectable} from "inversify";
 import { TYPES } from '@/ioc/types'
 import StudentModel from "@/views/shared/models/StudentModel";
 import {makeAutoObservable} from "mobx";
+import deepClone from 'clone'
 
 @injectable()
 export default class EditStudentPresenter {
     @inject(TYPES.StudentRepository) studentRepository;
-
-    vm = {
-        student_data: {}
-    }
+    @inject(TYPES.StudentModel) studentData
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    get studentData(): StudentModel {
-        return this.vm.student_data;
+    setFirstName(val: string):void{
+        this.studentData.first_name = val
     }
 
-    set studentData(value: StudentModel) {
-        this.vm.student_data = value;
+    setLastName(val: string):void{
+        this.studentData.first_name = val
+    }
+    setDateOfBirth(val: string):void{
+        this.studentData.first_name = val
+    }
+    setMunicipality(val: string):void{
+        this.studentData.first_name = val
     }
 
     init(): void{
         let student_id = this.studentRepository.currentStudentToModify
         if(student_id) {
             // edit flow
-            this.studentData = this.studentRepository.studentsList.find((std: StudentModel) => std.id === student_id)
+            let std = this.studentRepository.studentsList.find((std: StudentModel) => std.id === student_id)
+            this.studentData.id = std.id;
+            this.studentData.index = std.index;
+            this.studentData.first_name = std.first_name;
+            this.studentData.last_name = std.last_name;
+            this.studentData.date_of_birth = std.date_of_birth;
+            this.studentData.municipality_id = std.municipality_id;
         } else {
             // creation flow
-            this.studentData = new StudentModel(this.generateUUID())
+            this.studentData.id = this.generateUUID()
         }
     }
 
@@ -53,7 +63,7 @@ export default class EditStudentPresenter {
 
     async confirm(): Promise<void> {
         await this.studentRepository.editStudent(this.studentData)
-        // todo: notify successful/failed deletion
+        // todo: notify successful/failed update
         this.goBack()
     }
 }
