@@ -1,11 +1,12 @@
 import { createApp } from 'vue'
 import './assets/style/main.css'
-import App from './App.vue'
-import router from "./router";
+import App from './views/App/App.vue'
+import router from "@/router";
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import Observer from "mobx-vue-lite";
+import '@/common/plugins/interceptor'
 
 let app = createApp(App)
 app.use(router)

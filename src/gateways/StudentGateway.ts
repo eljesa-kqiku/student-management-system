@@ -1,29 +1,12 @@
 import {injectable} from "inversify";
+import axios from "axios";
+import { globalConfig } from "@/globalConfig.js";
 
 @injectable()
-export class StudentGateway {
+export default class StudentGateway {
     fetchAllStudents(): Promise<Object>{
-        let url = "/data/students.json";
+        let url = `${globalConfig.basic_url}/students`
 
-        // trying to make the return same as it would be with api calls
-        // with a library like axios we would only keep
-        // return axios.get(url)
-        return new Promise((resolve,reject)=>
-        {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();  // Parse the JSON from the response
-                })
-                .then(data => {
-                    resolve(data)
-                })
-                .catch(error => {
-                    console.error(error);
-                    reject('There was a problem with the fetch operation:');
-                });
-        })
+        return axios.get(url)
     }
 }

@@ -8,8 +8,17 @@
 import { RouterView } from "vue-router";
 import { onBeforeMount } from "vue";
 import router from "@/router";
+import { container } from "@/ioc/ioc";
+import { TYPES } from "@/ioc/types";
+
+let appPresenter = null;
+
 onBeforeMount(async () => {
-  router.push({ path: "/students" });
+  appPresenter = container.get(TYPES.AppPresenter);
+  let route = await appPresenter.initiateRoute();
+
+  router.push({ path: route });
+
 });
 </script>
 

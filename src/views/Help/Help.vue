@@ -7,7 +7,8 @@
 
 <script setup>
 
-import Header from "../../components/Header.vue";
+import Header from "@/views/Header/Header.vue";
+
 </script>
 
 <style scoped>

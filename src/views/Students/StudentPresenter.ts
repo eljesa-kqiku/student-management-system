@@ -5,7 +5,7 @@ import StudentModel from "../shared/models/StudentModel";
 import router from "@/router";
 import deepClone from 'clone'
 import { SortByModel, SortByType } from "../shared/models/SortByModel";
-import {snakeToTitleCase} from "../shared/services/utility-service";
+import {snakeToTitleCase} from "../../common/services/utility-service";
 
 @injectable()
 export default class StudentPresenter {

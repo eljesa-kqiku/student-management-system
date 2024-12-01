@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import Header from "@/components/Header.vue";
+import Header from "@/views/Header/Header.vue";
 import { container } from "@/ioc/ioc";
 import { TYPES } from "@/ioc/types";
 import { onBeforeMount } from "vue";

@@ -23,7 +23,7 @@
 
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { container } from "@/ioc/ioc";
 import { TYPES } from "@/ioc/types";
 import { onBeforeMount } from "vue";
