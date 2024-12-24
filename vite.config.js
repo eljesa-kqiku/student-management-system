@@ -4,6 +4,7 @@ import {fileURLToPath, URL} from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "dev/student_management_system/"
   plugins: [vue()],
   resolve: {
     alias: {
