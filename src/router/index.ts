@@ -8,7 +8,7 @@ import DeleteStudent from "@/views/Students/StudentActions/Delete/DeleteStudent.
 import EditStudent from "@/views/Students/StudentActions/Edit/EditStudent.vue";
 
 const router = createRouter({
-    history: createWebHistory('/'),
+    history: createWebHistory('/student-management-system'),
     routes: [{
         path: '/home',
         name: 'home',
