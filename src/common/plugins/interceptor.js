@@ -23,9 +23,7 @@ Axios.interceptors.request.use((config) => {
     accept: 'application/json',
   }
   let token = readFromLocalStorage('token')
-  console.log({ token });
   if(token){
-    console.log({token})
     config.headers.authorization = token;
   }
   return config;
