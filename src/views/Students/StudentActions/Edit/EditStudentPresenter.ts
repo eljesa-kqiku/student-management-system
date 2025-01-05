@@ -3,7 +3,7 @@ import {inject, injectable} from "inversify";
 import { TYPES } from '@/ioc/types'
 import StudentModel from "@/views/shared/models/StudentModel";
 import {makeAutoObservable} from "mobx";
-import deepClone from 'clone'
+import {ElNotification} from "element-plus";
 
 @injectable()
 export default class EditStudentPresenter {
@@ -14,24 +14,29 @@ export default class EditStudentPresenter {
         makeAutoObservable(this)
     }
 
+    get isCreationFlow(): boolean{
+        let student_id = this.studentRepository.currentStudentToModify
+        return !this.studentRepository.studentsList.find((std: StudentModel) => std.id === student_id)
+    }
+
     setFirstName(val: string):void{
         this.studentData.first_name = val
     }
 
     setLastName(val: string):void{
-        this.studentData.first_name = val
+        this.studentData.last_name = val
     }
     setDateOfBirth(val: string):void{
-        this.studentData.first_name = val
+        this.studentData.date_of_birth = val
     }
     setMunicipality(val: string):void{
-        this.studentData.first_name = val
+        this.studentData.municipality_id = val
     }
 
     init(): void{
-        let student_id = this.studentRepository.currentStudentToModify
-        if(student_id) {
+        if(!this.isCreationFlow) {
             // edit flow
+            let student_id = this.studentRepository.currentStudentToModify
             let std = this.studentRepository.studentsList.find((std: StudentModel) => std.id === student_id)
             this.studentData.id = std.id;
             this.studentData.index = std.index;
@@ -39,9 +44,6 @@ export default class EditStudentPresenter {
             this.studentData.last_name = std.last_name;
             this.studentData.date_of_birth = std.date_of_birth;
             this.studentData.municipality_id = std.municipality_id;
-        } else {
-            // creation flow
-            this.studentData.id = this.generateUUID()
         }
     }
 
@@ -49,21 +51,31 @@ export default class EditStudentPresenter {
         router.push({name: 'students'});
     }
 
-    // todo: move this to a service
-    generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
-
     cancel(): void{
         this.goBack()
     }
 
     async confirm(): Promise<void> {
-        await this.studentRepository.editStudent(this.studentData)
-        // todo: notify successful/failed update
-        this.goBack()
+        try{
+            if(this.isCreationFlow){
+                await this.studentRepository.createStudent(this.studentData)
+            }else {
+                await this.studentRepository.editStudent(this.studentData)
+            }
+            this.goBack()
+            ElNotification({
+                title: 'Success',
+                message: `User was ${this.isCreationFlow ? 'created' : 'updated'} successfully!`,
+                type: 'success',
+            })
+        }catch (e){
+            console.log(e)
+            ElNotification({
+                title: 'Error',
+                message: `User could not be ${this.isCreationFlow ? 'created' : 'modified'}!`,
+                type: 'error',
+            })
+        }
+
     }
 }

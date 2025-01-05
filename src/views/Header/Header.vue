@@ -11,11 +11,13 @@
       <RouterLink to="help" class="navbar-item">Help</RouterLink>
     </div>
     <div class="user-wrapper flex gap-7 items">
-      <div class="user-image rounded-full w-12 h-12 bg-gray-200"></div>
-      <div class="user-text min-w-16">
-        <p>John Doe</p>
-        <p class="text-gray-500" @click="logOut()">Log Out</p>
-      </div>
+      <Observer>
+        <div class="user-image rounded-full w-12 h-12 bg-gray-200"></div>
+        <div class="user-text min-w-16">
+          <p>{{ headerPresenter.loggedUserName }}</p>
+          <p class="text-gray-500" @click="logOut()">Log Out</p>
+        </div>
+      </Observer>
     </div>
   </div>
 </template>

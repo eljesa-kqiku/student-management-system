@@ -10,6 +10,10 @@ export default class HeaderPresenter {
         makeAutoObservable(this)
     }
 
+    get loggedUserName(){
+        return this.loginRepository.loggedUser?.user_username;
+    }
+
     logOut():void {
         this.loginRepository.logOut();
     }

@@ -2,7 +2,6 @@ import {inject, injectable} from "inversify";
 import StudentModel from "../models/StudentModel";
 import {makeAutoObservable} from "mobx";
 import { TYPES } from "@/ioc/types"
-import deepClone from 'clone'
 
 @injectable()
 export default class StudentRepository{
@@ -11,6 +10,7 @@ export default class StudentRepository{
 
     private pm = {
         students_list: [],
+        municipalities: [],
         current_student_to_modify: ""
     }
 
@@ -22,7 +22,7 @@ export default class StudentRepository{
         return this.pm.students_list
     }
 
-    set studentsList(value:StudentModel[]){
+    set studentsList(value: StudentModel[]){
         this.pm.students_list = value
     }
 
@@ -34,41 +34,69 @@ export default class StudentRepository{
         this.pm.current_student_to_modify = value
     }
 
+    get municipalities(){
+        return this.pm.municipalities
+    }
+
+    set municipalities(value: Object[]){
+        this.pm.municipalities = value
+    }
+
     async init(): Promise<void>{
-        try{
-            let res = await this.studentGateway.fetchAllStudents()
-            // todo: add a mapper for this
-            this.studentsList = res.data?.map((student: StudentModel) => new StudentModel(
-                student.id,
-                student.index,
-                student.first_name,
-                student.last_name,
-                student.date_of_birth,
-                student.municipality_id,
-            ))
-        }catch (e){
-            // todo: notify error on ui
-            this.studentsList = []
-            console.error(e)
-        }
+        await this.getAllStudents()
+        await this.getMunicipalities()
+    }
+
+    async getAllStudents(): Promise<void>{
+        let res = await this.studentGateway.fetchAllStudents()
+        this.studentsList = res.data?.map((student: StudentModel) => new StudentModel(
+            student.id,
+            student.index,
+            student.first_name,
+            student.last_name,
+            student.date_of_birth?.split('T')?.[0],
+            student.municipality_id,
+        ))
+    }
+
+    async getStudentById(id: String): Promise<StudentModel>{
+        let res = await this.studentGateway.getStudentById(id)
+        let student = res.data
+        return new StudentModel(
+            student.id,
+            student.index,
+            student.first_name,
+            student.last_name,
+            student.date_of_birth,
+            student.municipality_id,
+        )
     }
 
     async editStudent(studentData: StudentModel): Promise <void>{
-        // todo: call the api
-        let std  = this.studentsList.findIndex(item => item.id === studentData.id)
-        if(std != -1) {
-          // edit flow
-            this.studentsList[std] = studentData
-        } else {
-            // create flow
-            this.studentsList.push(studentData)
-        }
-        this.currentStudentToModify = ""
+        let data = await this.studentGateway.editStudent(studentData.id, studentData)
+        await this.refreshData()
+        return data
+    }
+
+    async creteStudent(studentData: StudentModel): Promise <void>{
+        let data = await this.studentGateway.editStudent(studentData.id, studentData)
+        await this.refreshData()
+        return data
     }
 
     async deleteStudent(student_id: string): Promise<void>{
-        // todo: call the api
-        this.studentsList = this.studentsList.filter(item => item.id !== student_id)
+        let data = await this.studentGateway.editStudent(student_id)
+        await this.refreshData()
+        return data
+    }
+
+    async refreshData(): Promise<void>{
         this.currentStudentToModify = ""
+        await this.getAllStudents()
+    }
+
+    async getMunicipalities(): Promise<void>{
+        let res = await this.studentGateway.getMunicipalities()
+        this.municipalities = res.data
     }
 }

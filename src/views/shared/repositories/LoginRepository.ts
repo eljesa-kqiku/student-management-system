@@ -15,6 +15,14 @@ export default class LoginRepository {
         makeAutoObservable(this)
     }
 
+    get loggedUser(){
+        return this.pm.logged_user
+    }
+
+    set loggedUser(value: Object){
+        this.pm.logged_user = value
+    }
+
     async login(email, password){
         try{
             let payload = {
@@ -22,8 +30,9 @@ export default class LoginRepository {
                 password
             }
             let res = await this.loginGateway.login(payload)
-            this.pm.logged_user = res.data.user
+            this.loggedUser = res.data.user
             saveToLocalStorage('token', res.data.token)
+            saveToLocalStorage('user', res.data.user.user_id)
         }catch(e){
             console.log(e)
         }
@@ -31,10 +40,14 @@ export default class LoginRepository {
 
     async logOut(){
         saveToLocalStorage('token', null)
-        this.vm.logged_user = null
+        this.loggedUser = null
     }
 
-    get loggedUser(){
-        return this.pm.logged_user
+    async getUserById(user_id: String){
+        let payload = {
+            user_id: user_id
+        }
+        let res = await this.loginGateway.getUserById(payload)
+        this.loggedUser = res.data.user
     }
 }
