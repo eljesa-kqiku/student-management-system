@@ -25,7 +25,7 @@
               <Observer>
                 <el-form-item class="input-item" label="Date of Birth" label-position="top">
                   <el-date-picker :model-value="presenter.studentData.date_of_birth"
-                                  @change="presenter.setDateOfBirth($event)"
+                                  @input="presenter.setDateOfBirth($event)"
                                   placeholder="Date of Birth" class="!w-full" />
                 </el-form-item>
               </Observer>

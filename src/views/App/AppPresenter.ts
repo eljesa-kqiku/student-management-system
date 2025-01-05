@@ -22,11 +22,12 @@ export default class LoginPresenter {
             if(!token || token === '' || token === null || token === 'null'){
                 return '/login'
             }else {
+                let user = readFromLocalStorage('user')
+                this.loginRepository.getUserById(user)
                 return '/students'
             }
         }catch(error){
             console.log(error)
         }
     }
-
 }

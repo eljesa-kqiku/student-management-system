@@ -4,8 +4,9 @@ import {makeAutoObservable} from "mobx";
 import StudentModel from "../shared/models/StudentModel";
 import router from "@/router";
 import deepClone from 'clone'
-import { SortByModel, SortByType } from "../shared/models/SortByModel";
+import { SortByModel } from "../shared/models/SortByModel";
 import {snakeToTitleCase} from "../../common/services/utility-service";
+import {ElNotification} from "element-plus";
 
 @injectable()
 export default class StudentPresenter {
@@ -45,16 +46,15 @@ export default class StudentPresenter {
     }
 
     get studentsList(): StudentModel[]{
-        // TODO: we should find the municipality name from id here
         return this.studentRepository.studentsList
     }
 
-    get filteredStudentList(): StudentModel[]{
+    get filteredStudentList(): Object[]{
         if(this.studentsList?.length === 0)
             return []
         let filteredData = deepClone(this.studentsList)
 
-        // filtering
+        //filtering
         if(this.queryString?.length > 0) {
             let query = this.queryString.toLowerCase();
             const keys: string[] = ["index", "first_name", "last_name"]
@@ -74,14 +74,32 @@ export default class StudentPresenter {
         //     }
         // }
 
+        filteredData = filteredData.map((std: StudentModel) => {
+            return {
+                ...std,
+                municipality: this.studentRepository.municipalities
+                    ?.find((item: Object) => item.id === std.municipality_id)?.name
+            }
+        })
+
         return filteredData
     }
 
     async init(): Promise<void> {
-        await this.studentRepository.init()
-        
-        this.sortByProperties = this.sortByKeys
-            ?.map(key => new SortByModel(key, snakeToTitleCase(key)))
+        try{
+            await this.studentRepository.init()
+
+            this.sortByProperties = this.sortByKeys
+                ?.map(key => new SortByModel(key, snakeToTitleCase(key)))
+        }catch (e){
+            console.log(e)
+            ElNotification({
+                title: 'Error',
+                message: `An error occurred!'}!`,
+                type: 'error',
+            })
+        }
+
     }
 
     createStudent(): void{

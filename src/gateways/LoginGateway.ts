@@ -8,4 +8,10 @@ export default class LoginGateway {
 
         return axios.post(url, payload)
     }
+
+    getUserById(payload){
+        let url = `${globalConfig.basic_url}/auth/user`
+
+        return axios.post(url, payload)
+    }
 }
