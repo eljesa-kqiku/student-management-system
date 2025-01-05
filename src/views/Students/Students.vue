@@ -23,7 +23,8 @@
             >Register new student
           </el-button>
         </div>
-        <table class="table-auto border-collapse w-full">
+        <el-skeleton v-if="presenter.loading" :rows="5" animated />
+        <table class="table-auto border-collapse w-full" v-else>
           <thead>
             <tr>
               <th>Index</th>
@@ -69,6 +70,7 @@ import { onBeforeMount } from "vue";
 import EditIcon from "@/assets/icons/edit-icon.vue";
 import TrashIcon from "@/assets/icons/trash-icon.vue";
 import { Search } from "@element-plus/icons-vue";
+import {Observer} from "mobx-vue-lite";
 
 let presenter = null;
 

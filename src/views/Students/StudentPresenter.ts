@@ -29,6 +29,11 @@ export default class StudentPresenter {
         return this.vm.query_string
     }
 
+    get loading(): boolean{
+        return this.studentRepository.loading
+    }
+
+
     setQueryString(val: string){
         this.vm.query_string = val
     }
@@ -95,7 +100,7 @@ export default class StudentPresenter {
             console.log(e)
             ElNotification({
                 title: 'Error',
-                message: `An error occurred!'}!`,
+                message: `An error occurred!`,
                 type: 'error',
             })
         }

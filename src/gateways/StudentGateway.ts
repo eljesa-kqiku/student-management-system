@@ -25,7 +25,7 @@ export default class StudentGateway {
     createStudent(payload: Object): Promise<Object>{
         let url = `${globalConfig.basic_url}/students`
 
-        return axios.put(url, payload)
+        return axios.post(url, payload)
     }
 
     deleteStudent(id: String): Promise<Object>{

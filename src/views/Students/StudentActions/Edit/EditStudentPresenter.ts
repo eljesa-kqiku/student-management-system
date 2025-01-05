@@ -19,6 +19,14 @@ export default class EditStudentPresenter {
         return !this.studentRepository.studentsList.find((std: StudentModel) => std.id === student_id)
     }
 
+    get municipalities(): Object {
+        return this.studentRepository.municipalities
+    }
+
+    setIndex(val: string): void{
+        this.studentData.index = val
+    }
+
     setFirstName(val: string):void{
         this.studentData.first_name = val
     }
@@ -26,9 +34,12 @@ export default class EditStudentPresenter {
     setLastName(val: string):void{
         this.studentData.last_name = val
     }
-    setDateOfBirth(val: string):void{
+
+    setDateOfBirth(val):void{
+        console.log('date change',{val})
         this.studentData.date_of_birth = val
     }
+
     setMunicipality(val: string):void{
         this.studentData.municipality_id = val
     }
@@ -56,8 +67,9 @@ export default class EditStudentPresenter {
     }
 
     async confirm(): Promise<void> {
+        let creationFlow = this.isCreationFlow
         try{
-            if(this.isCreationFlow){
+            if(creationFlow){
                 await this.studentRepository.createStudent(this.studentData)
             }else {
                 await this.studentRepository.editStudent(this.studentData)
@@ -65,14 +77,14 @@ export default class EditStudentPresenter {
             this.goBack()
             ElNotification({
                 title: 'Success',
-                message: `User was ${this.isCreationFlow ? 'created' : 'updated'} successfully!`,
+                message: `User was ${creationFlow ? 'created' : 'updated'} successfully!`,
                 type: 'success',
             })
         }catch (e){
             console.log(e)
             ElNotification({
                 title: 'Error',
-                message: `User could not be ${this.isCreationFlow ? 'created' : 'modified'}!`,
+                message: `User could not be ${creationFlow ? 'created' : 'modified'}!`,
                 type: 'error',
             })
         }

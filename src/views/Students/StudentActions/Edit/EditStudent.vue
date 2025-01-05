@@ -6,7 +6,12 @@
             <h3 class="text-base font-semibold text-gray-900" id="modal-title">Edit Student</h3>
             <div class="mt-2 w-full">
               <el-form-item class="input-item" label="Index" label-position="top">
-                <el-input :model-value="presenter.studentData.index" placeholder="Index" disabled/>
+                <Observer>
+                  <el-input :model-value="presenter.studentData.index"
+                            @input="presenter.setIndex($event)"
+                            :disabled="!presenter.isCreationFlow"
+                            placeholder="Index" />
+                </Observer>
               </el-form-item>
               <el-form-item class="input-item" label="First Name" label-position="top">
                 <Observer>
@@ -22,21 +27,29 @@
                             placeholder="Last Name" />
                 </Observer>
               </el-form-item>
-              <Observer>
-                <el-form-item class="input-item" label="Date of Birth" label-position="top">
-                  <el-date-picker :model-value="presenter.studentData.date_of_birth"
-                                  @input="presenter.setDateOfBirth($event)"
-                                  placeholder="Date of Birth" class="!w-full" />
-                </el-form-item>
-              </Observer>
-              <Observer>
-               <!--  TODO: this should be a dropdown -->
+              <el-form-item class="input-item" label="Date of Birth" label-position="top">
+                <Observer>
+                  <el-date-picker
+                      v-model="presenter.studentData.date_of_birth"
+                      value-format="YYYY-MM-DD"
+                      placeholder="Date of Birth" type="date" class="!w-full"
+                  />
+                </Observer>
+              </el-form-item>
                <el-form-item class="input-item" label="Municipality" label-position="top">
-                  <el-input :model-value="presenter.studentData.municipality_id"
-                           @change="presenter.setMunicipality($event)"
-                           placeholder="Municipality" />
+                 <Observer>
+                   <el-select :model-value="presenter.studentData.municipality_id"
+                              @change="presenter.setMunicipality($event)"
+                              placeholder="Municipality" filterable clearable>
+                     <el-option
+                      v-for="item in presenter.municipalities"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                     ></el-option>
+                   </el-select>
+                 </Observer>
                </el-form-item>
-              </Observer>
             </div>
           </div>
         </Observer>

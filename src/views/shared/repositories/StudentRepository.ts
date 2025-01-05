@@ -11,11 +11,20 @@ export default class StudentRepository{
     private pm = {
         students_list: [],
         municipalities: [],
-        current_student_to_modify: ""
+        current_student_to_modify: "",
+        loading: true
     }
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    get loading(): boolean{
+        return this.pm.loading
+    }
+
+    set loading(val: boolean): void{
+        this.pm.loading = val
     }
 
     get studentsList(): StudentModel[]{
@@ -43,8 +52,10 @@ export default class StudentRepository{
     }
 
     async init(): Promise<void>{
+        this.loading = true
         await this.getAllStudents()
         await this.getMunicipalities()
+        this.loading = false
     }
 
     async getAllStudents(): Promise<void>{
@@ -78,21 +89,23 @@ export default class StudentRepository{
         return data
     }
 
-    async creteStudent(studentData: StudentModel): Promise <void>{
-        let data = await this.studentGateway.editStudent(studentData.id, studentData)
+    async createStudent(studentData: StudentModel): Promise <void>{
+        let data = await this.studentGateway.createStudent(studentData)
         await this.refreshData()
         return data
     }
 
     async deleteStudent(student_id: string): Promise<void>{
-        let data = await this.studentGateway.editStudent(student_id)
+        let data = await this.studentGateway.deleteStudent(student_id)
         await this.refreshData()
         return data
     }
 
     async refreshData(): Promise<void>{
+        this.loading = true
         this.currentStudentToModify = ""
         await this.getAllStudents()
+        this.loading = false
     }
 
     async getMunicipalities(): Promise<void>{
