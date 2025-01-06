@@ -42,6 +42,9 @@ function logOut(){
 
 <style scoped>
 .navbar-item{
-  @apply hover:text-emerald-800 cursor-pointer
+  @apply cursor-pointer;
+}
+.navbar-item:hover{
+  color: var(--el-color-primary);
 }
 </style>
