@@ -1,22 +1,29 @@
 @import "./default.css";
+@import "./utility.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body{
-    --red-primary: #BB010B;
-    --red-secondary: #CD1624;
-    --green-primary: #006F57;
-    --green-secondary: #23856D;
-    --white-primary: #FAF8F8;
-    --black-primary: rgba(255, 255, 255, 0.87);
+    /*--red-primary: #BB010B;*/
+    /*--red-secondary: #CD1624;*/
+    /*--green-primary: #006F57;*/
+    /*--green-secondary: #23856D;*/
+    /*--white-primary: #FAF8F8;*/
+    /*--black-primary: rgba(255, 255, 255, 0.87);*/
 
-    --green-ternary: #213547;
 
+    --color-primary: rgb(208, 246, 255);
+    --color-secondary: rgb(255, 237, 237);
+    --color-accent: rgb(255, 255, 255);
+    --border-color: #ccc;
+    --text-color: rgb(70, 74, 87);
+    --background-color: #FFFFFF;
 
     --el-color-white: #ffffff;
     --el-color-black: #000000;
-    --el-color-primary: #409eff;
+    /*--el-color-primary: #1c5d99;*/
+    --el-color-primary: rgb(208, 246, 255);
     --el-color-success: #67c23a;
     --el-color-warning: #e6a23c;
     --el-color-danger: #f56c6c;

@@ -2,30 +2,31 @@
   <Observer class="w-full flex-1">
     <Header />
     <div
-      class="students-wrapper bg-gray-200 w-full flex-1 flex justify-center items-center"
+      class="students-wrapper w-full flex-1 flex justify-center items-center"
     >
       <div
-        class="students-content bg-white w-5/6 h-5/6 rounded-2xl p-10 flex flex-col gap-12"
+        class="students-content  w-5/6 h-5/6 p-10 flex flex-col justify-between max-sm:w-full max-sm:h-full"
       >
         <div class="students-control-ribbon flex justify-between gap-5">
           <el-input
             :model-value="presenter.queryString"
             @input="presenter.setQueryString($event)"
             placeholder="Search by Index or Name"
+            size="large"
             ><template #prefix>
               <el-icon><Search /></el-icon>
             </template>
           </el-input>
           <el-button
-            class="!bg-emerald-600 !border-none text-white p-2 pl-5 pr-5 rounded"
-            type="success"
+            type="primary" size="large"
             @click="presenter.createStudent()"
             >Register new student
           </el-button>
         </div>
-        <el-skeleton v-if="presenter.loading" :rows="5" animated />
-        <table class="table-auto border-collapse w-full" v-else>
-          <thead>
+        <div class="students-table">
+          <el-skeleton v-if="presenter.loading" :rows="5" animated />
+          <table class="table-auto border-collapse w-full" v-else>
+            <thead>
             <tr>
               <th>Index</th>
               <th>Name</th>
@@ -33,9 +34,9 @@
               <th>Municipality</th>
               <th>Actions</th>
             </tr>
-          </thead>
+            </thead>
 
-          <tbody>
+            <tbody>
             <tr v-for="student in presenter.filteredStudentList">
               <td>{{ student.index }}</td>
               <td>{{ student.first_name }} {{ student.last_name }}</td>
@@ -44,18 +45,22 @@
               <td>
                 <div class="actions-buttons flex justify-around w-full p-1">
                   <edit-icon
-                    class="edit-icon"
-                    @click="presenter.editStudent(student.id)"
+                      class="edit-icon"
+                      @click="presenter.editStudent(student.id)"
                   />
                   <trash-icon
-                    class="trash-icon"
-                    @click="presenter.deleteStudent(student.id)"
+                      class="trash-icon"
+                      @click="presenter.deleteStudent(student.id)"
                   />
                 </div>
               </td>
             </tr>
-          </tbody>
-        </table>
+            <tr v-if="presenter.filteredStudentList?.length === 0">
+              <td colspan="5"> No Data </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
         <router-view></router-view>
       </div>
     </div>
@@ -83,15 +88,17 @@ onBeforeMount(async () => {
 <style scoped>
 th,
 td {
-  @apply border border-emerald-900 p-2;
+  @apply p-1.5;
+  border: 1px solid var(--border-color);
+  background: var(--background-color)
 }
 
 th {
-  @apply bg-emerald-600 text-white;
+  background-color: var(--el-color-primary);
 }
 
 tr:hover {
-  @apply bg-gray-100 cursor-pointer;
+  @apply bg-gray-100;
 }
 
 .edit-icon,
@@ -100,8 +107,13 @@ tr:hover {
   height: 20px;
 }
 
-.edit-icon:hover path,
-.trash-icon:hover path {
-  @apply fill-emerald-700;
+.edit-icon:hover,
+.trash-icon:hover {
+  @apply cursor-pointer
+}
+
+.students-table {
+  height: calc(100% - 40px - 3rem);
+  overflow-y: scroll;
 }
 </style>

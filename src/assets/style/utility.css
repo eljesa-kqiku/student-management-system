@@ -1,0 +1,9 @@
+.bordered{
+    border: 1px solid var(--border-color);
+}
+
+.card {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}

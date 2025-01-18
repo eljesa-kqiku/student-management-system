@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import { readFromLocalStorage } from "../services/local-storage-service";
+import {saveToLocalStorage} from "@/common/services/local-storage-service";
 
 Axios.defaults.headers.common.Accept = 'application/json';
 
@@ -11,7 +12,10 @@ Axios.interceptors.response.use((response) => {
 }, function (error) {
   // Do something with response error
   const response = error.response;
-
+  if (response.status === 401) {
+    // clean outdated token
+    saveToLocalStorage('token', null)
+  }
   return Promise.reject(error);
 });
 

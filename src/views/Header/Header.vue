@@ -4,7 +4,7 @@
       <img src="../../assets/logo/logo1.png" alt="logo" class="w-10 h-10">
       <h2 class="font-semibold text-center">Student Information  <br/>System</h2>
     </div>
-    <div class="navbar-wrapper flex gap-7">
+    <div class="navbar-wrapper flex gap-7 max-sm:hidden">
       <RouterLink to="home" class="navbar-item">Home</RouterLink>
       <RouterLink to="students" class="navbar-item">Students</RouterLink>
       <RouterLink to="about" class="navbar-item">About</RouterLink>
@@ -15,7 +15,7 @@
         <div class="user-image rounded-full w-12 h-12 bg-gray-200"></div>
         <div class="user-text min-w-16">
           <p>{{ headerPresenter.loggedUserName }}</p>
-          <p class="text-gray-500" @click="logOut()">Log Out</p>
+          <p class="text-gray-500 cursor-pointer" @click="logOut()">Log Out</p>
         </div>
       </Observer>
     </div>
